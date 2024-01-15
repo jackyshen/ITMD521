@@ -1,7 +1,7 @@
-##with your name
+## with your name
 a picture of you
 a picture of something that describes you
-h2 Where are you from?
+## Where are you from?
 Tell us where you are from
 
 
