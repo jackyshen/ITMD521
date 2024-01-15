@@ -26,5 +26,30 @@ Like watching youtube to learn something new
 
 
 ![packer](images/packer.png "packer")
+
+
 ![brew](images/brew.png "brew")
+
+
+
 ![code](images/code.png "code")
+
+
+![git](images/git.png "git")
+
+
+![iterm](images/iterm.png "iterm")
+
+
+![ssh](images/ssh.png "ssh")
+
+
+![testfile](images/tesstfile.png "testtfile")
+
+
+
+![vagrant](images/vagrant.png "vagrant")
+
+
+
+![vbox](images/vbox.png "vbox")
