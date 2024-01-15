@@ -16,7 +16,9 @@ mmx 586
 ## IT Interests
 Tell us what you IT Interests and or skills are:
 
-Database, Cyber Security, Agrotham
+Database, Cyber Security, Algorithm
+International Relations
+
 
 ## Something Interesting About You
 Tell us something interesting about you
