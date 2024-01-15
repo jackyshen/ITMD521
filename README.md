@@ -26,3 +26,5 @@ Like watching youtube to learn something new
 
 
 ![packer](images/packer.png "packer")
+![brew](images/brew.png "brew")
+![code](images/code.png "code")
