@@ -1,4 +1,4 @@
-## with your name
+## J shen
 a picture of you
 a picture of something that describes you
 ************
@@ -45,8 +45,6 @@ Like watching youtube to learn something new
 
 ![ssh](images/ssh.png "ssh")
 
-
-![testfile](images/tesstfile.png "testtfile")
 
 
 
