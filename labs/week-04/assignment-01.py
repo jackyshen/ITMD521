@@ -29,4 +29,12 @@ df_with_schema = spark.createDataFrame(df.rdd,schema)
 
 df_with_schema.show()
 print("\nNumber of Rows:", df_with_schema.count())
+
+schema_ddl = "trip_id STRING, starttime STRING, stoptime STRING,bikeid STRING , tripduration  STRING ,from_station_id STRING,  \
+    from_station_name STRING,to_station_id STRING,to_station_name STRING,usertype STRING,gender STRING, birthyear STRING"
+
+df_ddl = spark.read.csv("path/to/your/csv/file.csv", header=True, schema=schema_ddl)
+
+
+
 spark.stop()
