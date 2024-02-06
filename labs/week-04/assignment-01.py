@@ -6,7 +6,7 @@ spark = ( SparkSession
     .builder
     .appName("Lab2")
     .getOrCreate())
-df = spark.read.csv("path/to/your/csv/file.csv", header=True)
+df = spark.read.csv("./data/Divvy_Trips_2015-Q1.csv", header=True)
 df.printSchema()
 print("\nNumber of Rows:", df.count())
 
@@ -30,11 +30,18 @@ df_with_schema = spark.createDataFrame(df.rdd,schema)
 df_with_schema.show()
 print("\nNumber of Rows:", df_with_schema.count())
 
+
+
+
 schema_ddl = "trip_id STRING, starttime STRING, stoptime STRING,bikeid STRING , tripduration  STRING ,from_station_id STRING,  \
     from_station_name STRING,to_station_id STRING,to_station_name STRING,usertype STRING,gender STRING, birthyear STRING"
 
-df_ddl = spark.read.csv("path/to/your/csv/file.csv", header=True, schema=schema_ddl)
+df_ddl = spark.read.csv("./data/Divvy_Trips_2015-Q1.csv", header=True, schema=schema_ddl)
+df_ddl.show()
+print("\nNumber of Rows:", df_ddl.count())
 
+format_df=df_ddl.select("*").where(df_ddl["gender"] == "Male").groupBy("to_station_name").agg(count("to_station_name"))
+format_df.show(10)
 
 
 spark.stop()

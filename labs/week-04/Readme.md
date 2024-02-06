@@ -43,17 +43,30 @@
 
 Add the required screenshots here:
 
+![sbt](image/sbt_package.png "sbt")
+
 ### Screenshot of the printSchema inferred in Python
 
 Screenshot goes here
+
+![Pyinferred](image/Pyinferred.png "Pyinferred")
 
 ### Screenshot of the printSchema programmatically in Python
 
 Screenshot goes here
 
+![pyprogramm](image/pyprogramm.png "pyprogramm")
+
 ### Screenshot of the printSchema via DDL in Python
 
 Screenshot goes here
+
+![pyddl](image/pyddl.png "pyddl")
+
+with groupby Male
+
+ß
+![groupby](image/groupby.png "groupby")
 
 ### Screenshot of the printSchema inferred in Scala
 
