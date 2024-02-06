@@ -54,18 +54,18 @@ Screenshot goes here
 
 Screenshot goes here
 
-![pyprogramm](image/pyprogramm.png "pyprogramm")
+![pyprogramm](../image/pyprogramm.png "pyprogramm")
 
 ### Screenshot of the printSchema via DDL in Python
 
 Screenshot goes here
 
-![pyddl](image/pyddl.png "pyddl")
+![pyddl](../image/pyddl.png "pyddl")
 
 with groupby Male
 
 ß
-![groupby](image/groupby.png "groupby")
+![groupby](../image/groupby.png "groupby")
 
 ### Screenshot of the printSchema inferred in Scala
 
