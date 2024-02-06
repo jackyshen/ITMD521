@@ -43,13 +43,12 @@
 
 Add the required screenshots here:
 
-![sbt](image/sbt_package.png "sbt")
 
 ### Screenshot of the printSchema inferred in Python
 
 Screenshot goes here
 
-![Pyinferred](image/Pyinferred.png "Pyinferred")
+![Pyinferred](../image/Pyinferred.png "Pyinferred")
 
 ### Screenshot of the printSchema programmatically in Python
 
