@@ -77,7 +77,7 @@ Screenshot goes here
 
 Screenshot goes here
 
-![Progam](../image/Print_Progam_scala.pny "Progam")
+![Progam](../image/Print_Progam_scala.png "Progam")
 ### Screenshot of the printSchema via DDL in Scala
 
 Screenshot goes here
