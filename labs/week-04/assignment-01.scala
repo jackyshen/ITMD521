@@ -71,7 +71,7 @@ val schema = StructType(Array(
       """.stripMargin
 
     // Read the CSV file into a DataFrame with the specified schema
-    val df_DDL = spark.read
+    val df_ddl = spark.read
       .format("csv")
       .option("header", "true")
       .option("inferSchema", "false")
@@ -79,10 +79,10 @@ val schema = StructType(Array(
       .option("schema", ddlSchema)
       .load("./data/Divvy_Trips_2015-Q1.csv")
 
-    df_DDL.show()
+    df_ddl.show()
 
 
-   val formatDf = dfDdl.select("*")
+   val formatDf = df_ddl.select("*")
       .where(col("gender") === "Male")
       .groupBy("to_station_name")
       .agg(count("to_station_name").alias("station_count"))
