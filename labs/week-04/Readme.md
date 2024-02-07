@@ -64,20 +64,28 @@ Screenshot goes here
 
 with groupby Male
 
-ß
 ![groupby](../image/groupby.png "groupby")
 
 ### Screenshot of the printSchema inferred in Scala
 
+
 Screenshot goes here
+
+![print](../image/scala_print.png "print")
 
 ### Screenshot of the printSchema programmatically in Scala
 
 Screenshot goes here
 
+![Progam](../image/Print_Progam_scala.pny "Progam")
 ### Screenshot of the printSchema via DDL in Scala
 
 Screenshot goes here
+
+![DDL](../image/DDL_scala.png "DDL")
+
+![groupby](../image/groupbyScala.png "groupby")
+
 
 ### Deliverable
 

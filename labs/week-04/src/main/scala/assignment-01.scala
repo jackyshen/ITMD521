@@ -49,7 +49,6 @@ val schema = StructType(Array(
 
     // Show the DataFrame
     df_with_schema.show()
-    
 
     // Print the number of rows
     println("\nNumber of Rows:", df_with_schema.count())
@@ -79,19 +78,20 @@ val schema = StructType(Array(
       .option("schema", ddlSchema)
       .load("./data/Divvy_Trips_2015-Q1.csv")
 
+      
     df_ddl.show()
 
-
-   val formatDf = df_ddl.select("*")
+    df_ddl.select("*").where(col("gender")==="Male").groupBy("to_station_name").count().show(10)
+  /*  val formatDf = df_ddl.select("*")
       .where(col("gender") === "Male")
       .groupBy("to_station_name")
-      .agg(count("to_station_name").alias("station_count"))
-
+     .agg(count("to_station_name").alias("station_count"))
 // Show the first 10 rows of the resulting DataFrame
       formatDf.show(10)
-
+*/
     // Stop the SparkSession
     spark.stop()
 
 }
 }
+
