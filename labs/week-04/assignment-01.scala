@@ -12,14 +12,19 @@ val spark = SparkSession.builder
   .appName("Lab2")
   .getOrCreate()
 
+
 // 读取数据源创建 DataFrame
 val df = spark.read
   .format("csv")
   .option("header", "true")
+  .option("inferSchema", "true")
   .load("./data/Divvy_Trips_2015-Q1.csv")
 
-// 打印 DataFrame 的 Schema
+
+df.show()
 df.printSchema()
+
+// 打印 DataFrame 的 Schema
 val schema = StructType(Array(
       StructField("trip_id", StringType, true),
       StructField("starttime", StringType, true),
@@ -44,9 +49,46 @@ val schema = StructType(Array(
 
     // Show the DataFrame
     df_with_schema.show()
+    
 
     // Print the number of rows
     println("\nNumber of Rows:", df_with_schema.count())
+
+  val ddlSchema =
+      """
+        |trip_id STRING,
+        |starttime STRING,
+        |stoptime STRING,
+        |bikeid STRING,
+        |tripduration STRING,
+        |from_station_id STRING,
+        |from_station_name STRING,
+        |to_station_id STRING,
+        |to_station_name STRING,
+        |usertype STRING,
+        |gender STRING,
+        |birthyear STRING
+      """.stripMargin
+
+    // Read the CSV file into a DataFrame with the specified schema
+    val df_DDL = spark.read
+      .format("csv")
+      .option("header", "true")
+      .option("inferSchema", "false")
+      .option("delimiter", ",")
+      .option("schema", ddlSchema)
+      .load("./data/Divvy_Trips_2015-Q1.csv")
+
+    df_DDL.show()
+
+
+   val formatDf = dfDdl.select("*")
+      .where(col("gender") === "Male")
+      .groupBy("to_station_name")
+      .agg(count("to_station_name").alias("station_count"))
+
+// Show the first 10 rows of the resulting DataFrame
+      formatDf.show(10)
 
     // Stop the SparkSession
     spark.stop()
