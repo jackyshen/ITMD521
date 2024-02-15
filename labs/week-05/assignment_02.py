@@ -31,34 +31,42 @@ if __name__ == "__main__":
     df.printSchema()
     fire_new_df = (df.withColumn("NewCallDate", to_timestamp(col("CallDate"),"MM/dd/yyyy")).drop("CallDate"))
     fire_new_df.select("CallType").filter(year("NewCallDate")==2018).distinct().show(truncate=True)
+    # q1 What were all the different types of fire calls in 2018?
     '''file_df = fire_new_df.select("CallType").filter(year("NewCallDate")==2018).distinct().show(truncate=True)
     '''
     ''' try parquet files '''
-    fire_new_df.write.mode('overwrite').parquet("./q1.txt")
-    file_parquet=spark.read.parquet("./q1.txt")
-    file_parquet.show();
+    
 
     ''' try db '''
-    spark.sql("CREATE DATABASE IF NOT EXISTS my_database")
+    #spark.sql("CREATE DATABASE IF NOT EXISTS my_database")
     fire_new_df.filter(year("NewCallDate")==2018) \
             .groupBy(month("NewCallDate").alias("month")) \
             .agg(count("*").alias("count")) \
             .orderBy(col("count").desc()).select("month","count").show(1,truncate=True)
+    # q2 What months within the year 2018 saw the highest number of fire calls?
     fire_new_df.filter(year("NewCallDate")==2018)\
             .groupBy("Neighborhood")\
             .agg(count("*").alias("count"))\
             .orderBy(col("count").desc()).select("Neighborhood","count").show(1,truncate=True)
+#q3 Which neighborhood in San Francisco generated the most fire calls in 2018?
     fire_new_df.filter(year("NewCallDate")==2018)\
             .groupBy("Neighborhood")\
             .agg(avg("Delay").alias("avg_delay"))\
             .orderBy(col("avg_delay").desc()).select("Neighborhood","avg_delay").show(1,truncate=True)
+#q4 Which neighborhoods had the worst response times to fire calls in 2018?
     fire_new_df.filter(year("NewCallDate")==2018)\
             .groupBy(weekofyear("NewCallDate").alias("week"))\
             .agg(count("*").alias("count"))\
             .orderBy(col("count").desc()).select("week","count").show(1,truncate=True)
+#q5 Which week in the year in 2018 had the most fire calls?
     neighborhood_zip_counts = fire_new_df.groupBy("Zipcode").agg(count("*").alias("fire_calls_count"))
     correlation_value = neighborhood_zip_counts.stat.corr("Zipcode", "fire_calls_count")
     print("Correlation between neighborhood and number of fire calls:", correlation_value)
+#q6 Is there a correlation between neighborhood, zip code, and number of fire calls?
+    fire_new_df.write.mode('overwrite').parquet("./q1.txt")
+    file_parquet=spark.read.parquet("./q1.txt")
+    file_parquet.show();
+    #q7 How can we use Parquet files or SQL tables to store this data and read it back?
     spark.stop()
 '''    properties = {
             "user":"pyspark",
