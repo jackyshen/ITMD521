@@ -41,6 +41,13 @@ Using the `departuredelays.csv` file, in a single file called `assignment-03.py`
 
 Place required screenshot
 
+
+![lab3](../image/lab3_1.png "lab3")
+
+![Pyinferred](../image/lab3_part1_2.png "Pyinferred")
+
+
+
 ## Assignment Details - Part II
 
 - From page 90-92, you will create a Table named `us_delay_flights_tbl` from the `departuredelays.csv`
@@ -54,6 +61,14 @@ Place required screenshot
 ### Part II - Screenshot
 
 Place screenshot here
+
+
+![lab3](../image/part_3_catalog_schema.png "lab3")
+
+
+
+
+
 
 ## Assignment Details - Part III
 
@@ -75,6 +90,11 @@ Using the `departuredelays` parquet file you created part III, read the content 
 * Save as type Parquet 
 
 ### Part IV - Screenshot
+
+
+
+![lab3](../image/lab3_part4.png "lab3")
+
 
 Place screenshot here
 
