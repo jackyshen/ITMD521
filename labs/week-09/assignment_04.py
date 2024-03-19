@@ -22,10 +22,37 @@ df = spark.read \
           properties={"user": "root", "password": "mysql", "driver":"com.mysql.cj.jdbc.Driver"})
 
 
-df.printSchema()
+
 record_count = df.count()
 print("Number of records in the DataFrame:", record_count)
+df.printSchema()
+salary_df = spark.read \
+    .jdbc("jdbc:mysql://localhost:3306/employees", "salaries", \
+          properties={"user": "root", "password": "mysql", "driver":"com.mysql.cj.jdbc.Driver"})
 
+
+top_salaries_df = salary_df.orderBy(salary_df["salary"].desc()).limit(10000)
+
+result_table_name = 'aces'
+mysql_url = "jdbc:mysql://localhost:3306/employees"
+mysql_properties = {
+    "user": "root",
+    "password": "mysql",
+    "driver": "com.mysql.cj.jdbc.Driver"
+}
+top_salaries_df.write.jdbc(mysql_url, result_table_name, mode="overwrite", properties=mysql_properties)
+
+output_path = "output"
+top_salaries_df.write \
+    .format("csv") \
+    .mode("overwrite") \
+    .option("compression", "snappy") \
+    .save(output_path)
+
+query = "(SELECT * FROM titles WHERE title = 'Senior Engineer') AS titles"
+
+
+spark.stop()
 
 
 
