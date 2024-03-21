@@ -10,6 +10,7 @@ Use Native Pyspark file methods
 '''
 
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import when,curent_date,col
 # Create SparkSession
 spark = SparkSession.builder \
            .appName('MySQLSpark') \
@@ -50,7 +51,54 @@ top_salaries_df.write \
     .save(output_path)
 
 query = "(SELECT * FROM titles WHERE title = 'Senior Engineer') AS titles"
+senior_df = spark.read.jdbc(url=mysql_url, table=query, properties=mysql_properties)
 
+
+pyspark_df = senior_df.withColumn("employment_status",
+                   when(col("to_date") == "9999-01-01", "current")
+                   .otherwise(when(col("to_date") < current_date(), "left")))
+
+pyspark_df.show()
+left_count = pyspark_df.filter(col("employment_status") == "left").count()
+current_count = pyspark_df.filter(col("employment_status") == "current").count()
+
+print("Number of senior engineers who have left:", left_count)
+print("Number of senior engineers who are currently employed:", current_count)
+
+
+left_df = pyspark_df.filter(col("employment_status") == "left")
+left_df.createOrReplaceTempView("left_tempview")
+df_temp= spark.sql("select * from left_tempview")
+df_temp.write \
+    .format("jdbc") \
+    .option("url", mysql_url) \
+    .option("dbtable", "left_tempview") \
+    .option("user", mysql_properties['user']) \
+    .option("password", mysql_properties['password']) \
+    .option("driver", mysql_properties['driver']) \
+    .mode("overwrite") \
+    .save()
+
+left_df.write \
+    .format("jdbc") \
+    .option("url", mysql_url) \
+    .option("dbtable", "left_table") \
+    .option("user", mysql_properties['user']) \
+    .option("password", mysql_properties['password']) \
+    .option("driver", mysql_properties['driver']) \
+    .mode("overwrite") \
+    .save()
+
+
+left_df.write\
+    .format("jdbc") \
+    .option("url", mysql_url) \
+    .option("dbtable", "left_df") \
+    .option("user", mysql_properties['user']) \
+    .option("password", mysql_properties['password']) \
+    .option("driver", mysql_properties['driver']) \
+    .mode("overwrite") \
+    .save()
 
 spark.stop()
 
