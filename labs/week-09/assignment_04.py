@@ -10,7 +10,7 @@ Use Native Pyspark file methods
 '''
 
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import when,curent_date,col
+from pyspark.sql.functions import when,current_date,col
 # Create SparkSession
 spark = SparkSession.builder \
            .appName('MySQLSpark') \
