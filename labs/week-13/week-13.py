@@ -89,4 +89,4 @@ stddev_temp_df.write.format("parquet").mode("append").save("s3a://jshen25/part-t
 savedf = stddev_temp_df.limit(12)
 savedf.write.format("csv").mode("overwrite").option("header", "true").save("s3a://jshen25/part-three.csv") 
 #### save as csv file  
-
+spark.stop()
