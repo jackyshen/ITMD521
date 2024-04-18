@@ -56,3 +56,6 @@ splitDF.show(5)
 ##############################################################################
 splitDF.write.format("csv").mode("overwrite").option("header","true").save("s3a://jshen25/80-uncompressed.csv")
 splitDF.write.format("csv").mode("overwrite").option("header","true").option("compression","lz4").save("s3a://jshen25/80-compressed.csv")
+coalescedDF = splitDF.coalesce(1)
+coalescedDF.write.format("csv").mode("overwrite").option("header", "true").save("s3a://jshen25/80.csv")
+coalescedDF.write.format("parquet").mode("overwrite").save("s3a://jshen25/80.parquet")
