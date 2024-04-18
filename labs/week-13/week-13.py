@@ -3,10 +3,10 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import IntegerType
 from pyspark.sql.functions import to_date
 from pyspark.sql.functions import year
-from pyspark.sql.funcitons import month
-from pyspark.sql.funcitons import avg
-from pyspark.sql.funcitons import floor
-from pyspark.sql.funcitons import stddev
+from pyspark.sql.functions import month
+from pyspark.sql.functions import avg
+from pyspark.sql.functions import floor
+from pyspark.sql.functions import stddev
 
 # Removing hard coded password - using os module to import them
 import os
