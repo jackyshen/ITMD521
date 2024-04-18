@@ -2,6 +2,11 @@ from pyspark import SparkConf
 from pyspark.sql import SparkSession
 from pyspark.sql.types import IntegerType
 from pyspark.sql.functions import to_date
+from pyspark.sql.functions import year
+from pyspark.sql.funcitons import month
+from pyspark.sql.funcitons import avg
+from pyspark.sql.funcitons import floor
+from pyspark.sql.funcitons import stddev
 
 # Removing hard coded password - using os module to import them
 import os
@@ -26,7 +31,7 @@ conf.set("spark.executor.instances", "24")
 # Internal IP for S3 cluster proxy
 conf.set("spark.hadoop.fs.s3a.endpoint", "http://infra-minio-proxy-vm0.service.consul")
 
-spark = SparkSession.builder.appName("jshen25").config('spark.driver.host','spark-edge.service.consul').config(conf=conf).getOrCreate()
+spark = SparkSession.builder.appName("jshen25 convert 80.txt to csv").config('spark.driver.host','spark-edge.service.consul').config(conf=conf).getOrCreate()
 
 df = spark.read.csv('s3a://itmd521/80.txt')
 
@@ -53,6 +58,7 @@ splitDF = df.withColumn('WeatherStation', df['_c0'].substr(5, 6)) \
 splitDF.printSchema()
 splitDF.show(5)
 
+
 ##############################################################################
 # Replace jhajek with your own HAWKID, which is your bucket name
 ##############################################################################
@@ -61,3 +67,26 @@ splitDF.write.format("csv").mode("overwrite").option("header","true").option("co
 coalescedDF = splitDF.coalesce(1)
 coalescedDF.write.format("csv").mode("overwrite").option("header", "true").save("s3a://jshen25/80.csv")
 coalescedDF.write.format("parquet").mode("overwrite").save("s3a://jshen25/80.parquet")
+
+##### part one is done
+
+newdf= df.withColumn('ObservationDate',to_date(df['_c0'].substr(16,8), 'yyyyMMdd')) \
+    .withColumn('AirTemperature', df['_c0'].substr(88, 5).cast('float') /10)
+#### for new data
+newdf = newdf.withColumn("ObservationDate", newdf["ObservationDate"].cast("ObservationDate"))
+newdf = newdf.withColumn("year", year(newdf["ObservationDate"]))
+newdf = newdf.withColumn("month", month(newdf["ObservationDate"]))
+newdf = newdf.withColumn("decade", floor(year(df["date"]) / 10) * 10)
+average_temp_df = newdf.groupBy("year", "month").agg(avg("AirTemperature").alias("avg_temperature"))
+average_temp_df.write.format("parquet").mode("overwrite").save("s3a://jshen25/part-three.parquet")
+#### for avg and save
+
+stddev_temp_df = newdf.groupBy("decade", "year", "month").agg(stddev("AirTemperature").alias("stddev_temperature"))
+
+### for stddev save with append 
+stddev_temp_df.write.format("parquet").mode("append").save("s3a://jshen25/part-three.parquet")
+
+savedf = stddev_temp_df.limit(12)
+savedf.write.format("csv").mode("overwrite").option("header", "true").save("s3a://jshen25/part-three.csv") 
+#### save as csv file  
+
