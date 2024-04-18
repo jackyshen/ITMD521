@@ -21,6 +21,8 @@ conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 # https://spot.io/blog/improve-apache-spark-performance-with-the-s3-magic-committer/
 conf.set('spark.hadoop.fs.s3a.committer.magic.enabled','true')
 conf.set('spark.hadoop.fs.s3a.committer.name','magic')
+conf.set("spark.executor.cores", "1")
+conf.set.("spark.executor.instances", "24")
 # Internal IP for S3 cluster proxy
 conf.set("spark.hadoop.fs.s3a.endpoint", "http://infra-minio-proxy-vm0.service.consul")
 
